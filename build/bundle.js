@@ -21865,14 +21865,34 @@ var Images = function (_Component) {
                         });
                 }
         }, {
+                key: 'removeImage',
+                value: function removeImage(event) {
+                        event.preventDefault();
+                        console.log('removeImage: ' + event.target.id);
+
+                        var updatedImages = Object.assign([], this.state.images);
+                        updatedImages.splice(event.target.id, 1);
+
+                        this.setState({
+                                images: updatedImages
+                        });
+                }
+        }, {
                 key: 'render',
                 value: function render() {
+                        var _this3 = this;
 
                         var list = this.state.images.map(function (image, i) {
                                 return _react2.default.createElement(
                                         'li',
                                         { key: i },
-                                        _react2.default.createElement('img', { style: { width: 72 }, src: image.secure_url })
+                                        _react2.default.createElement('img', { style: { width: 72 }, src: image.secure_url }),
+                                        _react2.default.createElement('br', null),
+                                        _react2.default.createElement(
+                                                'a',
+                                                { id: i, onClick: _this3.removeImage.bind(_this3), href: '#' },
+                                                'remove'
+                                        )
                                 );
                         });
                         return _react2.default.createElement(

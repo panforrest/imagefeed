@@ -56,12 +56,26 @@ class Images extends Component{
                 })
            })
 	}
+
+        removeImage(event){
+            event.preventDefault()
+            console.log('removeImage: '+event.target.id)
+
+                let updatedImages = Object.assign([], this.state.images)
+                updatedImages.splice(event.target.id, 1)
+
+                this.setState({
+                        images: updatedImages
+                })
+        }
+
 	render(){
 
                 const list = this.state.images.map((image, i) => {
                         return (
                                 <li key={i}>
                                     <img style={{width:72}} src={image.secure_url}/>
+                                    <br /><a id={i} onClick={this.removeImage.bind(this)} href="#">remove</a>
                                 </li>
                         )
                 })
