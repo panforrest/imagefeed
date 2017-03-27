@@ -21808,12 +21808,19 @@ var Images = function (_Component) {
         function Images() {
                 _classCallCheck(this, Images);
 
-                return _possibleConstructorReturn(this, (Images.__proto__ || Object.getPrototypeOf(Images)).apply(this, arguments));
+                var _this = _possibleConstructorReturn(this, (Images.__proto__ || Object.getPrototypeOf(Images)).call(this));
+
+                _this.state = {
+                        images: []
+                };
+                return _this;
         }
 
         _createClass(Images, [{
                 key: 'uploadFile',
                 value: function uploadFile(files) {
+                        var _this2 = this;
+
                         console.log('uploadFile: ');
                         var image = files[0];
 
@@ -21847,16 +21854,37 @@ var Images = function (_Component) {
                                 }
 
                                 console.log('UPLOAD COMPLETE: ' + JSON.stringify(resp.body));
+                                var uploaded = resp.body;
+
+                                var updatedImages = Object.assign([], _this2.state.images);
+                                updatedImages.push(uploaded);
+
+                                _this2.setState({
+                                        images: updatedImages
+                                });
                         });
                 }
         }, {
                 key: 'render',
                 value: function render() {
+
+                        var list = this.state.images.map(function (image, i) {
+                                return _react2.default.createElement(
+                                        'li',
+                                        { key: i },
+                                        _react2.default.createElement('img', { style: { width: 72 }, src: image.secure_url })
+                                );
+                        });
                         return _react2.default.createElement(
                                 'div',
                                 null,
                                 'Images component.',
-                                _react2.default.createElement(_reactDropzone2.default, { onDrop: this.uploadFile.bind(this) })
+                                _react2.default.createElement(_reactDropzone2.default, { onDrop: this.uploadFile.bind(this) }),
+                                _react2.default.createElement(
+                                        'ol',
+                                        null,
+                                        list
+                                )
                         );
                 }
         }]);
